@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block meta_title %}
+    <title>Nimble Board</title>
+    {% endblock meta_title %}
+    {% block meta %}
+        {% block meta_viewport %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock meta_viewport %}
+    {% endblock meta %}
+    {% block stylesheets %}
+        {% stylesheets 'bundles/agilenimbleboard/css/*' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet">
+        {% endstylesheets %}
+    {% endblock stylesheets %}
+
+    {% block head_scripts %}
+        {% block scripts_ie %}
+            <!--[if lt IE 9]>
+            {% javascripts 'bundles/agilenimbleboard/js/html5shiv/*' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            <![endif]-->
+        {% endblock scripts_ie %}
+    {% endblock head_scripts %}
+</head>
+{% block body %}
+{% block bodytag%}<body>{% endblock bodytag %}
+    {% block container %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    {% endblock container %}
+    {% block foot_script %}
+        {% javascripts 'bundles/agilenimbleboard/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock foot_script %}
+</body>
+{% endblock body %}
+</html>
