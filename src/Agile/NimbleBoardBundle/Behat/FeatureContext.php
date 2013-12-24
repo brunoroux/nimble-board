@@ -4,6 +4,7 @@ namespace Agile\NimbleBoardBundle\Behat;
 
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -23,7 +24,7 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
      */
     public function __construct(array $parameters)
     {
-        // Initialize your context here
+        $this->useContext('data', new DataContext());
     }
 
     /**
@@ -35,11 +36,69 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^I am logged in as user$/
+     */
+    public function iAmLoggedInAsUser()
+    {
+        $this->iAmLoggedInAsRole('ROLE_USER');
+    }
+
+    /**
+     * Create user and login with given role.
+     *
+     * @param string $role
+     */
+    private function iAmLoggedInAsRole($role)
+    {
+        $this->getSubContext('data')->thereIsUser('user', 'user@example.com', 'user', $role);
+        $this->getSession()->visit($this->generatePageUrl('fos_user_security_login'));
+
+        $this->fillField('_username', 'user');
+        $this->fillField('_password', 'user');
+        $this->pressButton('Connexion');
+    }
+
+    /**
+     * @When /^I go to the (.+) page$/
+     */
+    public function iGoToThePage($page)
+    {
+        $url = $this->generatePageUrl($page);
+        $this->visit($url);
+    }
+
+    /**
+     * @Then /^I should see (\d+) projects$/
+     */
+    public function iShouldSeeProjects($amount)
+    {
+        $this->assertSession()->elementsCount('css', 'div.project', $amount);
+    }
+
+    /**
+     * @Then /^I should see project with name "([^"]*)"$/
+     */
+    public function iShouldSeeProjectWithName($name)
+    {
+        $locator = sprintf("div.project h2:contains('%s')", $name);
+
+        $this->assertSession()->elementExists('css', $locator);
+    }
+
+    /**
      * @Then /^I should be redirected to the (.+) (page|step)$/
      */
     public function iShouldBeOnThePage($page)
     {
         $this->assertSession()->addressEquals($this->generatePageUrl($page));
+    }
+
+    /**
+     * @Then /^display the response content$/
+     */
+    public function displayTheResponseContent()
+    {
+        echo $this->getSession()->getPage()->getContent();
     }
 
     /**
@@ -106,5 +165,16 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     private function getContainer()
     {
         return $this->kernel->getContainer();
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function purgeDatabase()
+    {
+        $entityManager = $this->kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $purger = new ORMPurger($entityManager);
+        $purger->purge();
     }
 }

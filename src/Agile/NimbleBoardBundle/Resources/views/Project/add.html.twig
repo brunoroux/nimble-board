@@ -1,0 +1,17 @@
+{% extends "AgileNimbleBoardBundle::layout.html.twig" %}
+
+{% block content %}
+    {% block page_title %}
+        <h1>{% trans %}project.add{% endtrans %}</h1>
+    {% endblock page_title %}
+    {% block project_form %}
+        {{ form(form) }}
+    {% endblock project_form %}
+    {% block project_links %}
+        <div>
+            <a href="{{ path('agile_nimble_board_project_list') }}" class="btn">
+                <span class="glyphicon glyphicon-list"></span> {% trans %}project.return_to_list{% endtrans %}
+            </a>
+        </div>
+    {% endblock project_links %}
+{% endblock content %}

@@ -3,6 +3,7 @@
 namespace Agile\NimbleBoardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 
 /**
  * Project
@@ -52,6 +53,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -59,6 +61,7 @@ class Project
     /**
      * @var \DateTime
      *
+     * @Timestampable(on="update")
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
