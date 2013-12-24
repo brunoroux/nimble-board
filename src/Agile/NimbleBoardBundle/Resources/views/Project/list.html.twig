@@ -1,0 +1,46 @@
+{% extends "AgileNimbleBoardBundle::layout.html.twig" %}
+
+{% block content %}
+    {% block project_list_title %}
+        <h1>{% trans %}project.list{% endtrans %}</h1>
+    {% endblock %}
+    {% block project_list_links %}
+    <div class="links">
+        <a class="btn btn-primary" href="{{ path('agile_nimble_board_project_add') }}">
+            <span class="glyphicon glyphicon-plus"></span> {% trans %}project.add{% endtrans %}
+        </a>
+    </div>
+    {% endblock %}
+    {% block project_list %}
+    <div class="project_list">
+        {% for project in projects %}
+            {% block project_list_item %}
+            <div class="project">
+                {% block project_name %}
+                    <h2><a href="{{ path('agile_nimble_board_project_edit', {id: project.id}) }}">{{ project.name }}</a></h2>
+                {% endblock project_name %}
+                {% block project_description %}
+                    <p>{{ project.description }}</p>
+                {% endblock project_description %}
+                {% block project_start %}
+                    <span class="start">{% trans %}project.start{% endtrans %} : {{ project.start.format('d/m/y') }}</span>
+                {% endblock project_start %}
+                {% block project_end %}
+                    <span class="end">{% trans %}project.end{% endtrans %} : {{ project.end.format('d/m/y') }}</span>
+                {% endblock project_end %}
+                {% block project_links %}
+                    <div class="links">
+                        <a class="btn" href="{{ path('agile_nimble_board_project_edit', {id: project.id}) }}">
+                            <span class="glyphicon glyphicon-edit"></span> {% trans %}project.edit{% endtrans %}
+                        </a>
+                        <a class="btn" href="{{ path('agile_nimble_board_project_delete', {id: project.id}) }}">
+                            <span class="glyphicon glyphicon-remove"></span> {% trans %}project.delete{% endtrans %}
+                        </a>
+                    </div>
+                {% endblock project_links %}
+            </div>
+            {% endblock project_list_item %}
+        {% endfor %}
+    </div>
+    {% endblock project_list %}
+{% endblock %}

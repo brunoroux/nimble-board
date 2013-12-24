@@ -4,17 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
+
     <parameters>
-        <parameter key="agile_nimble_board.example.class">Agile\NimbleBoardBundle\Example</parameter>
+        <parameter key="agile_nimble_board.utils.controller_utils.class">Agile\NimbleBoardBundle\Utils\ControllerUtils</parameter>
+        <parameter key="agile_nimble_board.controller.project.class">Agile\NimbleBoardBundle\Controller\ProjectController</parameter>
     </parameters>
 
     <services>
-        <service id="agile_nimble_board.example" class="%agile_nimble_board.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="agile_nimble_board.utils.controller_utils" class="%agile_nimble_board.utils.controller_utils.class%">
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="agile_nimble_board.controller.project" class="%agile_nimble_board.controller.project.class%">
+            <argument type="service" id="agile_nimble_board.utils.controller_utils" />
         </service>
     </services>
-    -->
 </container>

@@ -7,4 +7,16 @@
     <route id="agile_nimble_board_homepage" pattern="/">
         <default key="_controller">AgileNimbleBoardBundle:Index:index</default>
     </route>
+    <route id="agile_nimble_board_project_list" pattern="/projects">
+        <default key="_controller">agile_nimble_board.controller.project:listAction</default>
+    </route>
+    <route id="agile_nimble_board_project_add" pattern="/project/add">
+        <default key="_controller">agile_nimble_board.controller.project:addAction</default>
+    </route>
+    <route id="agile_nimble_board_project_edit" pattern="/project/{id}/edit">
+        <default key="_controller">agile_nimble_board.controller.project:editAction</default>
+    </route>
+    <route id="agile_nimble_board_project_delete" pattern="/project/{id}/delete">
+        <default key="_controller">agile_nimble_board.controller.project:deleteAction</default>
+    </route>
 </routes>
