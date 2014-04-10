@@ -1,0 +1,11 @@
+imports:
+    - php
+
+tools:
+  php_code_sniffer:
+    filter:
+      excluded-paths: [ vendor/* ]
+
+  php_analyzer:
+    filter:
+      excluded-paths: [ vendor/* ]
