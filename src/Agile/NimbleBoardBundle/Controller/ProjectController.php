@@ -3,6 +3,7 @@
 namespace Agile\NimbleBoardBundle\Controller;
 
 use Agile\NimbleBoardBundle\Entity\Project;
+use Agile\NimbleBoardBundle\Form\Type\ProjectType;
 use Agile\NimbleBoardBundle\Utils\ControllerUtils;
 
 class ProjectController
@@ -26,9 +27,7 @@ class ProjectController
 
     public function addAction()
     {
-        $project = new Project();
-
-        $form = $this->getForm($project);
+        $form = $this->utils->createForm(new ProjectType());
         $form->handleRequest($this->utils->getRequest());
 
         if ($form->isValid()) {
@@ -41,18 +40,5 @@ class ProjectController
             'AgileNimbleBoardBundle:Project:add.html.twig',
             array('form' => $form->createView())
         );
-    }
-
-    protected function getForm($project)
-    {
-        $translator = $this->utils->getTranslator();
-        $builder = $this->utils->getFormBuilder($project)
-            ->add('name', 'text', array('label' => $translator->trans('project.name')))
-            ->add('description', 'textarea', array('label' => $translator->trans('project.description')))
-            ->add('start', 'date', array('label' => $translator->trans('project.start')))
-            ->add('end', 'date', array('label' => $translator->trans('project.end')))
-            ->add('submit', 'submit', array('label' => $translator->trans('project.submit')));
-
-        return $builder->getForm();
     }
 }

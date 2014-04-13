@@ -26,6 +26,22 @@
                 <source>project.end</source>
                 <target>Project end</target>
             </trans-unit>
+            <trans-unit id="7">
+                <source>project.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>project.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>project.submit</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>project.return_to_list</source>
+                <target>Back to list</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

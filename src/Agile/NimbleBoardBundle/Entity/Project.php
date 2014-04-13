@@ -2,6 +2,7 @@
 
 namespace Agile\NimbleBoardBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
 
@@ -80,11 +81,19 @@ class Project
      */
     private $sprints;
 
+    public function __construct($name, $description, \DateTime $start, \DateTime $end)
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->start = $start;
+        $this->end = $end;
+
+        $this->stories = new ArrayCollection();
+        $this->sprints = new ArrayCollection();
+    }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -92,45 +101,7 @@ class Project
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Project
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Project
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -138,22 +109,15 @@ class Project
     }
 
     /**
-     * Set start
-     *
-     * @param \DateTime $start
-     * @return Project
+     * @return string
      */
-    public function setStart($start)
+    public function getName()
     {
-        $this->start = $start;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get start
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStart()
     {
@@ -161,71 +125,10 @@ class Project
     }
 
     /**
-     * Set end
-     *
-     * @param \DateTime $end
-     * @return Project
-     */
-    public function setEnd($end)
-    {
-        $this->end = $end;
-
-        return $this;
-    }
-
-    /**
-     * Get end
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEnd()
     {
         return $this->end;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Project
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Project
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }

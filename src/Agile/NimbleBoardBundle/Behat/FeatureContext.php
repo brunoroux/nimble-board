@@ -55,7 +55,7 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
 
         $this->fillField('_username', 'user');
         $this->fillField('_password', 'user');
-        $this->pressButton('Connexion');
+        $this->pressButton('Login');
     }
 
     /**

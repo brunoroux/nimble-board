@@ -61,12 +61,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
     public function thereIsProject($name)
     {
-        $project = new Project();
-        $project->setName($name);
-        $project->setDescription($this->faker->text());
-        $project->setStart(new \DateTime());
-        $project->setEnd(new \DateTime('+1 year'));
-
+        $project = new Project($name, $this->faker->text(), new \DateTime(), new \DateTime('+1 year'));
         $this->getManager()->persist($project);
         $this->getManager()->flush();
     }

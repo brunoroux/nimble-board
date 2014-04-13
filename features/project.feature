@@ -10,6 +10,6 @@ Feature: project
             | test project |
         And I am logged in as user
         When I go to the project list page
-        Then I should see "Projets"
+        Then I should see "Projects"
         And I should see 2 projects
         And I should see project with name "nimbleboard"

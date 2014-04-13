@@ -3,6 +3,7 @@
 namespace spec\Agile\NimbleBoardBundle\Controller;
 
 use Agile\NimbleBoardBundle\Entity\Project;
+use Agile\NimbleBoardBundle\Form\Type\ProjectType;
 use Agile\NimbleBoardBundle\Utils\ControllerUtils;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
@@ -71,15 +72,13 @@ class ProjectControllerSpec extends ObjectBehavior
         Response $mockResponse,
         Request $request,
         TranslatorInterface $translator,
-        FormBuilder $builder,
         Form $form,
         FormView $formView,
         ControllerUtils $utils
     ) {
         $translator->trans(Argument::type('string'))->willReturn('some translation');
 
-        $builder->add(Argument::type('string'), Argument::type('string'), Argument::type('array'))->willReturn($builder);
-        $builder->getForm()->willReturn($form);
+        $utils->createForm(new ProjectType())->willReturn($form);
         $form->handleRequest($request)->willReturn($form);
         $form->createView()->willReturn($formView);
         $form->isValid()->willReturn(false);

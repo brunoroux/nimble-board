@@ -2,12 +2,14 @@
 
 namespace spec\Agile\NimbleBoardBundle\Utils;
 
+use Agile\NimbleBoardBundle\Form\Type\ProjectType;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +27,7 @@ class ControllerUtilsSpec extends ObjectBehavior
         EngineInterface $templating,
         Request $request,
         Response $mockResponse,
+        Form $form,
         FormFactory $formFactory,
         FormBuilder $builder,
         TranslatorInterface $translator,
@@ -46,6 +49,7 @@ class ControllerUtilsSpec extends ObjectBehavior
 
         $container->get('form.factory')->willReturn($formFactory);
         $formFactory->createBuilder('form', null, array())->willReturn($builder);
+        $formFactory->create(new ProjectType(), null, array())->willReturn($form);
 
         $container->get('translator')->willReturn($translator);
 
@@ -81,6 +85,11 @@ class ControllerUtilsSpec extends ObjectBehavior
     function it_should_have_get_form_builder(FormBuilder $builder)
     {
         $this->getFormBuilder()->shouldReturn($builder);
+    }
+
+    function it_should_create_a_form_from_type(Form $form)
+    {
+        $this->createForm(new ProjectType())->shouldReturn($form);
     }
 
     function it_should_have_get_translator(TranslatorInterface $translator)
