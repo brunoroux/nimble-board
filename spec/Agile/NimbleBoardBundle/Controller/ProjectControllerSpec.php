@@ -2,6 +2,7 @@
 
 namespace spec\Agile\NimbleBoardBundle\Controller;
 
+use Agile\NimbleBoardBundle\Entity\Project;
 use Agile\NimbleBoardBundle\Utils\ControllerUtils;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
@@ -47,14 +48,19 @@ class ProjectControllerSpec extends ObjectBehavior
         $this->shouldHaveType('Agile\NimbleBoardBundle\Controller\ProjectController');
     }
 
-    function it_should_respond_to_list_action(ControllerUtils $utils, EntityRepository $repository, Response $mockResponse)
-    {
-        $repository->findAll()->willReturn(array('project 1', 'project 2'));
+    function it_should_respond_to_list_action(
+        ControllerUtils $utils,
+        EntityRepository $repository,
+        Response $mockResponse,
+        Project $project1,
+        Project $project2
+    ) {
+        $repository->findAll()->willReturn(array($project1, $project2));
 
         $utils
             ->renderView(
                 'AgileNimbleBoardBundle:Project:list.html.twig',
-                array('projects' => array('project 1', 'project 2'))
+                array('projects' => array($project1, $project2))
             )
             ->willReturn($mockResponse);
 
